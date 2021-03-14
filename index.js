@@ -58,9 +58,22 @@ const defn = (functionName, args, body) => {
 const interpret = (...code) => {
     for (let index = 0; index < code.length; index++) {
         let line = code[index]
+
         if (!Array.isArray(line)) {
             throw new SyntaxError(`Expected Array, got other in line: ${index + 1}`)
         }
+
+        const isDefn = line[0] === defn
+        const isInvoke = typeof line[0] === 'string'
+        // парсим вариант с объявлением
+        if (isDefn) {
+        }
+        // парсим вариант с вызовом
+        else if (isInvoke) {
+        } else {
+            throw new SyntaxError(`Expected String or Reference, got other in line: ${index + 1}`)
+        }
+    }
     }
 }
 
