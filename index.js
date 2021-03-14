@@ -60,6 +60,12 @@ const showReportOfInterpreterWork = () => {
     console.log('-----------------------------')
 }
 
+const storeCleaner = () => {
+    definedFunctions.clear()
+    invokedFunctions.length = 0
+}
+
+
 /*
     Объявленные функции держим в мапе definedFunctions, содержающую:
         1. ссылку на рантайм функцию
