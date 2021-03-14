@@ -47,6 +47,12 @@ const ensureInvokeParams = (line, index) => {
     if (definedFunction.args.length > passedFuncArgs.length) throw new SyntaxError(`You missed the argument '${definedFunction.args[passedFuncArgs.length]}' when calling the function '${funcName}' in line: ${index + 1}`)
     if (definedFunction.args.length < passedFuncArgs.length) throw new SyntaxError(`You passed more arguments than required for the function '${funcName}' in line: ${index + 1}`)
 }
+
+const invokedFunctionsAdd = (func) => {
+    const invokedFunc = Object.assign({}, func)
+    invokedFunctions.push(invokedFunc)
+}
+
 /*
     Объявленные функции держим в мапе definedFunctions, содержающую:
         1. ссылку на рантайм функцию
