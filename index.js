@@ -94,6 +94,7 @@ const interpret = (...code) => {
         }
         // парсим вариант с вызовом
         else if (isInvoke) {
+            ensureInvokeParams(line, index)
         } else {
             throw new SyntaxError(`Expected String or Reference, got other in line: ${index + 1}`)
         }
