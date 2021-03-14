@@ -183,6 +183,13 @@ const interpret = (...code) => {
 
         return localResult
     }
+
+    const result = [...invokedFunctions]
+
+    showReportOfInterpreterWork()
+    storeCleaner()
+
+    return result
 }
 
 // Функция, используемая в runtime
