@@ -65,9 +65,32 @@ const interpret = (...code) => {
 
         const isDefn = line[0] === defn
         const isInvoke = typeof line[0] === 'string'
+
         // парсим вариант с объявлением
         if (isDefn) {
             ensureDefnParams(line, index)
+            const [defn, funcName, args, body] = line
+
+            /*
+                bodyFunc может быть:
+                    1.ссылкой на рантайм функцию,
+                    2.строкой с называнием ранее объявленной функции
+             */
+            const [bodyFunc] = body
+
+            const expectedDeclaredFunction = typeof bodyFunc === 'string'
+            if (!expectedDeclaredFunction) {
+                defn(funcName, args, body)
+                continue
+            }
+
+            const definedFunc = definedFunctions.get(bodyFunc)
+            if (!definedFunc) throw new Error(`Function '${funcName}' not defined in line:${index + 1}`)
+
+            //заменяем текстовое название функции ссылкой на рантайм функцию
+            body[0] = definedFunc.execute
+
+            defn(funcName, args, body)
         }
         // парсим вариант с вызовом
         else if (isInvoke) {
