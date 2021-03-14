@@ -19,6 +19,7 @@
 const definedFunctions = new Map()
 
 const invokedFunctions = []
+/*
     Объявленные функции держим в мапе definedFunctions, содержающую:
         1. ссылку на рантайм функцию
         2. результат
@@ -26,7 +27,6 @@ const invokedFunctions = []
         3. кол. аргументов тела функции
  */
 const defn = (functionName, args, body) => {
-    // требуется реализация
     const [refToFunc, ...bodyArgs] = body
 
     // кол. параметров тела функции может быть больше, чем кол. параметров объявленной функции,
@@ -46,16 +46,9 @@ const defn = (functionName, args, body) => {
 }
 
 const interpret = (...code) => {
-    // требуется реализация
 }
 
 // Функция, используемая в runtime
 const sum = (...args) => args.reduce((prev, curr) => prev + curr)
 
-// Пример вызова функции interpret
-const result = interpret(
-    [defn, "sum3", ['a', 'b', 'c'], [sum, 'a', 'b', 'c']],
-    ['sum3', 10, 20, 30]
-)
 
-console.assert(result === 60)
