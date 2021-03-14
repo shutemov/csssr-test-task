@@ -67,6 +67,7 @@ const interpret = (...code) => {
         const isInvoke = typeof line[0] === 'string'
         // парсим вариант с объявлением
         if (isDefn) {
+            ensureDefnParams(line, index)
         }
         // парсим вариант с вызовом
         else if (isInvoke) {
