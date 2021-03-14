@@ -56,6 +56,8 @@ const defn = (functionName, args, body) => {
         2. Копию массива вызова функций с результатом их выполнения.
  */
 const interpret = (...code) => {
+    for (let index = 0; index < code.length; index++) {
+    }
 }
 
 // Функция, используемая в runtime
