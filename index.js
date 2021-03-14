@@ -19,8 +19,30 @@
 const definedFunctions = new Map()
 
 const invokedFunctions = []
+    Объявленные функции держим в мапе definedFunctions, содержающую:
+        1. ссылку на рантайм функцию
+        2. результат
+        3. кол. аргументов объявленной функции
+        3. кол. аргументов тела функции
+ */
 const defn = (functionName, args, body) => {
     // требуется реализация
+    const [refToFunc, ...bodyArgs] = body
+
+    // кол. параметров тела функции может быть больше, чем кол. параметров объявленной функции,
+    // подразумевая, что мы хотим использовать константу
+    const isFitArgs = (bodyArgs.length === args.length) || (bodyArgs.length > args.length)
+
+    if (!isFitArgs) {
+        throw new SyntaxError(`Invalid number of parameters in the function '${functionName}' body`)
+    }
+
+    definedFunctions.set(functionName, {
+        execute: refToFunc,
+        result: undefined,
+        args: args,
+        bodyArgs: bodyArgs
+    })
 }
 
 const interpret = (...code) => {
