@@ -53,6 +53,13 @@ const invokedFunctionsAdd = (func) => {
     invokedFunctions.push(invokedFunc)
 }
 
+const showReportOfInterpreterWork = () => {
+    console.log('Interpreter finish:')
+    console.log('>>> definedFunctions', definedFunctions)
+    console.log('>>> invokedFunctions', invokedFunctions)
+    console.log('-----------------------------')
+}
+
 /*
     Объявленные функции держим в мапе definedFunctions, содержающую:
         1. ссылку на рантайм функцию
