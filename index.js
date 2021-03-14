@@ -95,6 +95,29 @@ const interpret = (...code) => {
         // парсим вариант с вызовом
         else if (isInvoke) {
             ensureInvokeParams(line, index)
+
+            const [funcName, ...passedFuncArgs] = line
+
+            const definedFunction = definedFunctions.get(funcName)
+
+            const isBodyFuncHasConst = passedFuncArgs.length < definedFunction.bodyArgs.length
+
+            if (!isBodyFuncHasConst) {
+                definedFunction.result = definedFunction.execute(...passedFuncArgs)
+                invokedFunctionsAdd(definedFunction)
+                continue
+            }
+
+            //считаем, что все, что не стринг является константным значением.
+            const constArgs = definedFunction.bodyArgs.filter(arg => {
+                return typeof arg !== 'string'
+            })
+
+            //объединяем переданные значения аргументов с константными
+            const totalArgs = passedFuncArgs.concat(constArgs)
+            definedFunction.result = definedFunction.execute(...totalArgs)
+
+            invokedFunctionsAdd(definedFunction)
         } else {
             throw new SyntaxError(`Expected String or Reference, got other in line: ${index + 1}`)
         }
