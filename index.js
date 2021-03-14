@@ -195,4 +195,43 @@ const interpret = (...code) => {
 // Функция, используемая в runtime
 const sum = (...args) => args.reduce((prev, curr) => prev + curr)
 
+try {
+    // Пример 1. Кейс из задания.
+    const result = interpret(
+        [defn, 'sum3', ['a', 'b', 'c'], [sum, 'a', 'b', 'c']],
+        ['sum3', 10, 20, 30],
+    )
+
+    // Пример 2. Кейс с применением константы. (константой является доп. аргумент в теле функции)
+    const result2 = interpret(
+        [defn, 'sum3WithConst', ['a', 'b'], [sum, 'a', 'b', 4]],
+        ['sum3WithConst', 2, 3],
+    )
+
+    // Пример 3. Кейс с использованием уже ранее объявленной функции.
+    const result3 = interpret(
+        [defn, 'childFunc', ['a', 'b'], [sum, 'a', 'b']],
+        [defn, 'parentSum', ['a', 'b'], ['childFunc', 'a', 'b']],
+        ['parentSum', 2, 2],
+    )
+
+    // Пример 4. Кейс с использованием уже ранее объявленной функции и константой.
+    const result4 = interpret(
+        [defn, 'sum2', ['a', 'b'], [sum, 'a', 'b']],
+        [defn, 'add4', ['number'], ['sum2', 4, 'number']],
+        ['add4', 0],
+        ['add4', 4],
+        ['add4', 8]
+    )
+
+    console.log('[results]')
+    console.log('result 1', result)
+    console.log('result 2', result2)
+    console.log('result 3', result3)
+    console.log('result 4', result4)
+
+    console.assert(result === 60)
+} catch (e) {
+    console.error(e)
+}
 
