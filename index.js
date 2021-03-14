@@ -35,6 +35,19 @@ const ensureDefnParams = (line, index) => {
 }
 
 /*
+    набор валидаторов для вызова функции:
+        1. функция не определена,
+        2. пропуск аргумента,
+        3. большее кол. аргументов.
+*/
+const ensureInvokeParams = (line, index) => {
+    const [funcName, ...passedFuncArgs] = line
+    const definedFunction = definedFunctions.get(funcName)
+    if (!definedFunction) throw new Error(`Function '${funcName}' not defined in line:${index + 1}`)
+    if (definedFunction.args.length > passedFuncArgs.length) throw new SyntaxError(`You missed the argument '${definedFunction.args[passedFuncArgs.length]}' when calling the function '${funcName}' in line: ${index + 1}`)
+    if (definedFunction.args.length < passedFuncArgs.length) throw new SyntaxError(`You passed more arguments than required for the function '${funcName}' in line: ${index + 1}`)
+}
+/*
     Объявленные функции держим в мапе definedFunctions, содержающую:
         1. ссылку на рантайм функцию
         2. результат
