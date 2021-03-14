@@ -57,6 +57,10 @@ const defn = (functionName, args, body) => {
  */
 const interpret = (...code) => {
     for (let index = 0; index < code.length; index++) {
+        let line = code[index]
+        if (!Array.isArray(line)) {
+            throw new SyntaxError(`Expected Array, got other in line: ${index + 1}`)
+        }
     }
 }
 
