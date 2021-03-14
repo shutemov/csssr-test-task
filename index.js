@@ -169,6 +169,19 @@ const interpret = (...code) => {
             throw new SyntaxError(`Expected String or Reference, got other in line: ${index + 1}`)
         }
     }
+
+    /*
+        При 1 объявлении фукнции и ее последующего вызова, сразу возвращаем результат,
+        иначе возвращаем мапу функций и результатов выполнения.
+     */
+    if (definedFunctions.size === 1) {
+        let localResult = undefined
+
+        definedFunctions.forEach((value) => {
+            localResult = value.result
+        })
+
+        return localResult
     }
 }
 
