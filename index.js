@@ -19,6 +19,21 @@
 const definedFunctions = new Map()
 
 const invokedFunctions = []
+
+/*
+    набор валидаторов для объявления функции:
+        1. функция не определена,
+        2. пропуск аргумента,
+        3. большее кол. аргументов.
+*/
+const ensureDefnParams = (line, index) => {
+    const [, funcName, args, body] = line
+    if (typeof funcName !== 'string') throw new TypeError(`The function name must be a string, got ${typeof funcName} in line: ${index + 1}`)
+    if (definedFunctions.has(funcName)) throw  new SyntaxError(`A function named '${funcName}' has been declared in line: ${index + 1}\``)
+    if (!Array.isArray(args)) throw  new TypeError(`The function args must be a Array, got ${typeof args} in line: ${index + 1}`)
+    if (!Array.isArray(body)) throw  new TypeError(`The function args must be a Array, got ${typeof body} in line: ${index + 1}`)
+}
+
 /*
     Объявленные функции держим в мапе definedFunctions, содержающую:
         1. ссылку на рантайм функцию
